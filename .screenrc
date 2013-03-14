@@ -1,0 +1,26 @@
+# Escape Key is C-\
+escape ^\^\
+
+# I like a large scrollback
+defscrollback 10240
+
+# don't show startup message
+startup_message off
+
+# changes the kind of messages to the nethack-style
+nethack on
+
+# clear background-color
+defbce on
+
+# auto-detach when crash
+autodetach on
+
+# hardstatus
+hardstatus alwayslastline "[%y/%m/%d %02c:%s] %-w%{=b bw}[%n %t]%{-}%+w"
+
+# replace $SHELL to fixed-string 'bash'
+shelltitle "$|bash"
+
+# disable visual vells
+vbell off
