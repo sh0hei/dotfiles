@@ -44,7 +44,7 @@ GREEN='\e[1;32m'
 
 prompt="\[$RED\]\t\[$none\] \u@\h:\w\[$RED\]\$\[$none\] "
 case ${TERM} in
-	xterm*|rxvt*|Eterm*|aterm*|kterm*|gnome*|interix)
+	linux|xterm*|rxvt*|Eterm*|aterm*|kterm*|gnome*|interix)
 		PS1=${prompt}
 		;;
 	screen*)
