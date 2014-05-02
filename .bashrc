@@ -52,7 +52,7 @@ yellow='\e[1;33m'
 
 prompt="\[$LIGHTGREEN\]\t\[$none\] \u@\h:\w\[$LIGHTGREEN\]\$\[$none\] "
 case ${TERM} in
-	xterm*|rxvt*|Eterm*|aterm*|kterm*|gnome*|interix)
+	linux|xterm*|rxvt*|Eterm*|aterm*|kterm*|gnome*|interix)
 		PS1=${prompt}
 		;;
 	screen*)
