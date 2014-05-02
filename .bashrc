@@ -35,14 +35,22 @@ HISTFILESIZE=99999
 HISTTIMEFORMAT='%Y-%m-%d %T '
 
 # Change the window title of X terminals 
-none='\e[0m'
-cyan='\e[0;36m'
-green='\e[0;32m'
-yellow='\e[1;33m'
-RED='\e[1;31m'
-GREEN='\e[1;32m'
 
-prompt="\[$RED\]\t\[$none\] \u@\h:\w\[$RED\]\$\[$none\] "
+none='\e[0m'
+Black='\e[0;30m'
+Red='\e[0;31m'
+Green='\e[0;32m'
+Blue='\e[0;34m'
+Purple='\e[0;35m'
+Cyan='\e[0;36m'
+LIGHTBLUE='\e[1;34m'
+LIGHTGREEN='\e[1;32m'
+LIGHTCYAN='\e[1;36m'
+LIGHTRED='\e[1;31m'
+LIGHTPURPLE='\e[1;35m'
+yellow='\e[1;33m'
+
+prompt="\[$LIGHTGREEN\]\t\[$none\] \u@\h:\w\[$LIGHTGREEN\]\$\[$none\] "
 case ${TERM} in
 	xterm*|rxvt*|Eterm*|aterm*|kterm*|gnome*|interix)
 		PS1=${prompt}
