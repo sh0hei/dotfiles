@@ -60,5 +60,3 @@ case ${TERM} in
 		PROMPT_COMMAND='echo -ne "\ek\e\\"'
 		;;
 esac
-
-#test
