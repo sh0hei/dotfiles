@@ -35,7 +35,6 @@ HISTFILESIZE=99999
 HISTTIMEFORMAT='%Y-%m-%d %T '
 
 # Change the window title of X terminals 
-
 none='\e[0m'
 Black='\e[0;30m'
 Red='\e[0;31m'
@@ -50,7 +49,9 @@ LIGHTRED='\e[1;31m'
 LIGHTPURPLE='\e[1;35m'
 yellow='\e[1;33m'
 
+# set prompt format
 prompt="\[$LIGHTGREEN\]\t\[$none\] \u@\h:\w\[$LIGHTGREEN\]\$\[$none\] "
+
 case ${TERM} in
 	linux|xterm*|rxvt*|Eterm*|aterm*|kterm*|gnome*|interix)
 		PS1=${prompt}
