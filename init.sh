@@ -5,6 +5,7 @@
 
 # files for management with git
 FILELIST="
+.bash_profile
 .bashrc
 .screenrc
 .vimrc
