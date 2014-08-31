@@ -1,7 +1,7 @@
 " .vimrc
 
 "-----------------------------------------------------------------------------
-" Basic 基本設定
+" Basic
 "-----------------------------------------------------------------------------
 
 " Use Vim settings, rather than Vi settings (much better!).
@@ -9,9 +9,7 @@
 " vi との互換性を持たせない
 set nocompatible
 
-"-----------------------------------------------------------------------------
-" 文字コード関連
-"-----------------------------------------------------------------------------
+" Automatic recognition of Charactor Code {{{
 if &encoding !=# 'utf-8'
 	set encoding=japan
 	set fileencoding=japan
@@ -19,16 +17,16 @@ endif
 if has('iconv')
 	let s:enc_euc = 'euc-jp'
 	let s:enc_jis = 'iso-2022-jp'
-	" iconvがeucJP-msに対応しているかをチェック
+	" Check iconv are aware of eusJP-ms
 	if iconv("\x87\x64\x87\x6a", 'cp932', 'eucjp-ms') ==# "\xad\xc5\xad\xcb"
 		let s:enc_euc = 'eucjp-ms'
 		let s:enc_jis = 'iso-2022-jp-3'
-	" iconvがJISX0213に対応しているかをチェック
+	" Check iconv are aware of JISX0213
 	elseif iconv("\x87\x64\x87\x6a", 'cp932', 'euc-jisx0213') ==# "\xad\xc5\xad\xcb"
 		let s:enc_euc = 'euc-jisx0213'
 		let s:enc_jis = 'iso-2022-jp-3'
 	endif
-	" fileencodingsを構築
+	" Construct fileencodings
 	if &encoding ==# 'utf-8'
 		let s:fileencodings_default = &fileencodings
 		let &fileencodings = s:enc_jis .','. s:enc_euc .',cp932'
@@ -48,11 +46,11 @@ if has('iconv')
 			let &fileencodings = &fileencodings .','. s:enc_euc
 		endif
 	endif
-	" 定数を処分
+	" Dispose the constant
 	unlet s:enc_euc
 	unlet s:enc_jis
 endif
-" 日本語を含まない場合は fileencoding に encoding を使うようにする
+" If don't include the Japanese, use the encoding to fileencoding
 if has('autocmd')
 	function! AU_ReCheck_FENC()
 		if &fileencoding =~# 'iso-2022-jp' && search("[^\x01-\x7e]", 'n') == 0
@@ -61,31 +59,27 @@ if has('autocmd')
 	endfunction
 	autocmd BufReadPost * call AU_ReCheck_FENC()
 endif
-" 改行コードの自動認識
+" Automatic recognition of the line feed code
 set fileformats=unix,dos,mac
-" □とか○の文字があってもカーソル位置がずれないようにする
+" Cursor position to prevent misalignment even if charactor of □or ○
 if exists('&ambiwidth')
 	set ambiwidth=double
-endif
+endif " }}}
 
 "-----------------------------------------------------------------------------
-" Editor 編集関連
+" Editor
 "-----------------------------------------------------------------------------
 
 " allow backspacing over everything in insert mode
-" インサートモードでの BS 強化
 set backspace=indent,eol,start
 
 " do not keep a backup file, use versions instead
-" 編集ファイルのバックアップを残さない
 set nobackup
 
 " keep 50 lines of command line history
-" コマンド履歴の保持数
 set history=50
 
 " In many terminal emulators the mouse works just fine, thus enable it.
-" マウス操作を有効にする
 if has('mouse')
   set mouse=a
 endif
@@ -108,7 +102,7 @@ augroup BinaryXXD
 augroup END
 
 "-----------------------------------------------------------------------------
-" Searching 検索関連
+" Searching
 "-----------------------------------------------------------------------------
 
 " 検索文字列が小文字の場合は大文字小文字を区別なく検索する
@@ -121,18 +115,16 @@ set smartcase
 set wrapscan
 
 " do not incremental searching
-" 検索文字列入力時に順次対象文字列にヒットさせない
 set noincsearch
 
 "-----------------------------------------------------------------------------
-" Display 装飾関連
+" Display
 "-----------------------------------------------------------------------------
 
 " 暗い背景色を想定する
 set background=dark
 
 " Switch syntax highlighting on.
-" シンタックスハイライトを有効にする
 if has("syntax")
 	syntax on
 endif
@@ -149,14 +141,12 @@ set tabstop=4
 set shiftwidth=4
 
 " display incomplete command
-" 入力中のコマンドをステータスに表示する
 set showcmd
 
 " 括弧入力時の対応する括弧を表示
 set showmatch
 
 " Switch on highlighting the last used search pattern.
-" 検索結果文字列のハイライトを有効にする
 set hlsearch
 
 " ステータスラインを常に表示
@@ -167,7 +157,7 @@ set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c%V
 
 
 "-----------------------------------------------------------------------------
-" Mapping マップ定義
+" Mapping
 "-----------------------------------------------------------------------------
 
 " バッファ移動用キーマップ
@@ -188,3 +178,38 @@ map <kMinus> <C-W>-
 
 " Ctrl-D で現在時刻を挿入する
 inoremap <C-D> <C-R>=strftime("%H:%M")<CR>
+
+"-----------------------------------------------------------------------------
+" Misc
+"-----------------------------------------------------------------------------
+
+" NeoBundle {{{
+" ------------------------------------------------------------------------------
+let s:noplugin = 0
+let s:neobundledir = expand("~/.vim/neobundle.vim")
+let s:bundledir = expand("~/.vim/bundle")
+
+" Functions {{{
+" Install Minimum Plugins
+function! s:init_neobundle()
+	if has("vim_starting")
+		execute "set runtimepath+=" . s:neobundledir
+	endif
+	call neobundle#begin(s:bundledir)
+	NeoBundleFetch "Shougo/neobundle.vim" " Let NeoBundle manage NeoBundle
+	NeoBundleLazy "Shougo/unite.vim", { "autoload": { "commands": ["Unite"] }}
+	NeoBundle "Shougo/vimproc", {
+		\ "build": {
+		\ 	"windows" : "make -f make_mingw32.mak",
+		\ 	"cygwin" : "make -f make_cygwin.mak",
+		\ 	"mac" : "make -f make_mac.mak",
+		\ 	"unix" : "make -f make_unix.mak",
+		\ }}
+endfunction
+
+" Finish NeoBundle setting
+function! s:finish_neobundle()
+	call neobundle#end()
+	filetype plugin indent on " Required!
+	NeoBundleCheck " Installation check.
+endfunction
