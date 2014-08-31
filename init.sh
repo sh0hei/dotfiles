@@ -1,28 +1,24 @@
 #!/bin/sh
 
-# 1.execute [git clone git://github.com/sh0hei/dotfiles.git]
-# 2.execute this script
+DOT_FILES=(
+  .bash_profile \
+  .bashrc       \
+  .screenrc     \
+  .vimrc        \
+)
 
-# files for management with git
-FILELIST="
-.bash_profile
-.bashrc
-.screenrc
-.vimrc
-"
-
-# escape current files and directories
-if [ ! -e ~/dotfiles_old ]; then
-	mkdir ~/dotfiles_old
-	for FILE in ${FILELIST};
-	do
-		mv ~/${FILE} ~/dotfiles_old/
-	done
-fi
-
-# create symbolic link
-for FILE in ${FILELIST};
+# Set Symbolic Link
+for file in ${DOT_FILES[@]}
 do
-	rm -rf ~/${FILE}
-	ln -s ~/dotfiles/${FILE} ~/${FILE}
+  if [ -a $HOME/$file ]; then
+    echo "Already exists file: $file"
+  else
+    ln -s $HOME/dotfiles/${file} $HOME/${file}
+    echo "Put Symbolic Link: $file"
+  fi
 done
+
+# Install neobundle.vim
+if [ ! -e $HOME/.vim/neobundle.vim -a -x "`which git`" ]; then
+  git clone https://github.com/Shougo/neobundle.vim $HOME/.vim/neobundle.vim
+fi
