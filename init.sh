@@ -1,10 +1,12 @@
 #!/bin/sh
 
 DOT_FILES=(
-  .bash_profile \
-  .bashrc       \
-  .screenrc     \
-  .vimrc        \
+  .bash_profile        \
+  .bashrc              \
+  .screenrc            \
+  .vimrc               \
+  .git-prompt.sh       \
+  .git-completion.bash \
 )
 
 # Set Symbolic Link
