@@ -6,6 +6,11 @@
 " Use Vim settings, rather than Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
 set nocompatible
+
+" release autogroup in MyAutoCmd
+augroup MyAutoCmd
+    autocmd!
+augroup END
 " }}}
 
 " Automatic recognition of Charactor Code {{{
