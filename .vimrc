@@ -1,13 +1,12 @@
 " .vimrc
 
-"-----------------------------------------------------------------------------
-" Basic
+" Basic Settings {{{
 "-----------------------------------------------------------------------------
 
 " Use Vim settings, rather than Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
-" vi との互換性を持たせない
 set nocompatible
+" }}}
 
 " Automatic recognition of Charactor Code {{{
 if &encoding !=# 'utf-8'
@@ -168,7 +167,7 @@ map <F2> <ESC>:bp<CR>
 map <F3> <ESC>:bn<CR>
 map <F4> <ESC>:bw<CR>
 
-" 表示行単位で行移動する
+" Even text wrapping movement by j or k, is modified to act naturally.
 nnoremap j gj
 nnoremap k gk
 
@@ -213,3 +212,74 @@ function! s:finish_neobundle()
 	filetype plugin indent on " Required!
 	NeoBundleCheck " Installation check.
 endfunction
+
+" bundled
+function! s:bundled(bundle)
+    if !isdirectory(s:bundledir)
+        return 0
+    endif
+    if stridx(&runtimepath, s:neobundledir) == -1
+        return 0
+    endif
+    if a:bundle ==# 'neobundle.vim'
+        return 1
+    else
+        return neobundle#is_installed(a:bundle)
+    endif
+endfunction
+
+" load_source
+function! s:load_source(path)
+    let path = expand(a:path)
+    if filereadable(path)
+        execute "source " . path
+    endif
+endfunction
+" }}}
+
+" Install Plugins
+if !isdirectory(s:neobundledir) || v:version < 702
+    let s:noplugin = 1
+elseif isdirectory(s:neobundledir) && !isdirectory(s:bundledir)
+    " If Neobundle is present and the plug-in is not installed,
+    " I performed in preparation
+    call s:init_neobundle()
+    call s:finish_neobundle()
+else
+    " Shougo plugins {{{
+    " -------------------------------------------------
+    call s:init_neobundle()
+    NeoBundleLazy "Shougo/vimfiler", {
+        \ "depends" : ["Shougo/unite.vim"],
+        \ "autoload" : {
+        \     "commands" : ["VimFiler", "VimFilerTab", "VimFilerExplorer"],
+        \ }}
+    " }}}
+
+    " Git plugins {{{
+    " -------------------------------------------------
+    NeoBundleLazy "mattn/gist-vim", {
+         \ "depends" : ["mattn/webapi-vim"], "autoload": { "commands": ["Gist"] }}
+    " }}}
+
+    " Scala plugins {{{
+    " -------------------------------------------------
+    NeoBundleLazy "derekwyatt/vim-scala", {
+        \ "autoload" : { "filetypes" : ["scala"]}}
+    " }}}
+
+    " Plugins Settings
+    " -------------------------------------------------
+
+    " vimfiler {{{
+    if s:bundled("vimfiler")
+        let g:vimfiler_as_default_explorer = 1
+        let g:vimfiler_safe_mode_by_default = 0
+        " close vimfiler automatically when there are only vimfiler open
+        nnoremap <Leader>e :VimFilerExplorer<CR>
+        autocmd MyAutoCmd BufEnter * if (winnr('$') == 1 && &filetype ==# 'vimfiler') |
+            \ q | endif
+    endif " }}}
+
+    call s:finish_neobundle()
+endif " }}}
