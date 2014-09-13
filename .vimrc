@@ -157,7 +157,8 @@ set hlsearch
 set laststatus=2
 
 " ステータスラインに文字コードと改行文字を表示する
-set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c%V%8P
+" * disabled for lightline.vim
+" set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c%V%8P
 
 
 "-----------------------------------------------------------------------------
@@ -186,6 +187,11 @@ inoremap <C-D> <C-R>=strftime("%H:%M")<CR>
 "-----------------------------------------------------------------------------
 " Misc
 "-----------------------------------------------------------------------------
+
+" For lightline.vim
+if !has('gui_running')
+  set t_Co=256
+endif
 
 " NeoBundle {{{
 " ------------------------------------------------------------------------------
@@ -273,6 +279,12 @@ else
         \ "autoload" : { "filetypes" : ["scala"]}}
     " }}}
 
+    " Vim Status Line plugins {{{
+    " -------------------------------------------------
+    NeoBundle "itchyny/lightline.vim"
+    NeoBundle "tpope/vim-fugitive"
+    " }}}
+
     " Plugins Settings
     " -------------------------------------------------
 
@@ -281,10 +293,25 @@ else
         let g:vimfiler_as_default_explorer = 1
         let g:vimfiler_safe_mode_by_default = 0
         " close vimfiler automatically when there are only vimfiler open
-        nnoremap <Leader>e :VimFilerExplorer<CR>
+        nnoremap <Leader>e :VimFilerExplorer -split -simple -winwidth=30 -no-quit<CR>
         autocmd MyAutoCmd BufEnter * if (winnr('$') == 1 && &filetype ==# 'vimfiler') |
             \ q | endif
     endif " }}}
+
+    " lightline.vim {{{
+    let g:lightline = {
+        \ 'colorscheme': 'landscape',
+        \ 'active': {
+        \   'left': [ [ 'mode', 'paste' ],
+        \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
+        \  },
+        \ 'component': {
+        \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
+        \ },
+        \ 'component_visible_condition': {
+        \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
+        \ }
+        \ }
 
     call s:finish_neobundle()
 endif " }}}
