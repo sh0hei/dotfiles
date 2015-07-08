@@ -5,8 +5,6 @@ DOT_FILES=(
   .bashrc              \
   .screenrc            \
   .vimrc               \
-  .git-prompt.sh       \
-  .git-completion.bash \
 )
 
 # Set Symbolic Link
