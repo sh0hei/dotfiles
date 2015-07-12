@@ -267,12 +267,6 @@ else
         \ }}
     " }}}
 
-    " Git plugins {{{
-    " -------------------------------------------------
-    NeoBundleLazy "mattn/gist-vim", {
-         \ "depends" : ["mattn/webapi-vim"], "autoload": { "commands": ["Gist"] }}
-    " }}}
-
     " Scala plugins {{{
     " -------------------------------------------------
     NeoBundleLazy "derekwyatt/vim-scala", {

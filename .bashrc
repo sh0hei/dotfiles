@@ -50,7 +50,7 @@ LIGHTPURPLE='\e[1;35m'
 yellow='\e[1;33m'
 
 # set prompt format
-prompt="\[$LIGHTGREEN\]\t\[$none\] \u@\h:\w\[$Red\]$(__git_ps1)\[$none\]\[$LIGHTGREEN\]\$\[$none\] "
+prompt="\[$LIGHTGREEN\]\t\[$none\] \u@\h:\w\[$LIGHTGREEN\]\$\[$none\] "
 
 case ${TERM} in
 	linux|xterm*|rxvt*|Eterm*|aterm*|kterm*|gnome*|interix)
