@@ -190,7 +190,7 @@ inoremap <C-D> <C-R>=strftime("%H:%M")<CR>
 
 " For lightline.vim
 if !has('gui_running')
-  set t_Co=256
+	set t_Co=256
 endif
 
 " NeoBundle {{{
