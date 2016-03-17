@@ -190,7 +190,7 @@ inoremap <C-D> <C-R>=strftime("%H:%M")<CR>
 
 " For lightline.vim
 if !has('gui_running')
-  set t_Co=256
+	set t_Co=256
 endif
 
 " NeoBundle {{{
@@ -265,12 +265,6 @@ else
         \ "autoload" : {
         \     "commands" : ["VimFiler", "VimFilerTab", "VimFilerExplorer"],
         \ }}
-    " }}}
-
-    " Git plugins {{{
-    " -------------------------------------------------
-    NeoBundleLazy "mattn/gist-vim", {
-         \ "depends" : ["mattn/webapi-vim"], "autoload": { "commands": ["Gist"] }}
     " }}}
 
     " Scala plugins {{{

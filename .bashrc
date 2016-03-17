@@ -29,11 +29,6 @@ alias ll='ls -l'
 alias la='ls -A'
 alias lla='ls -lA'
 
-# git-completion.bash
-source $HOME/.git-prompt.sh
-source $HOME/.git-completion.bash
-GIT_PS1_SHOWDIRTYSTATE=true
-
 # for setting history length and format see HISTSIZE and HISTFILESIZE and HISTTIMEFORMAT in bash(1)
 HISTSIZE=99999
 HISTFILESIZE=99999
@@ -55,7 +50,7 @@ LIGHTPURPLE='\e[1;35m'
 yellow='\e[1;33m'
 
 # set prompt format
-prompt="\[$LIGHTGREEN\]\t\[$none\] \u@\h:\w\[$Red\]$(__git_ps1)\[$none\]\[$LIGHTGREEN\]\$\[$none\] "
+prompt="\[$LIGHTGREEN\]\t\[$none\] \u@\h:\w\[$LIGHTGREEN\]\$\[$none\] "
 
 case ${TERM} in
 	linux|xterm*|rxvt*|Eterm*|aterm*|kterm*|gnome*|interix)
