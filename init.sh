@@ -9,6 +9,12 @@ DOT_FILES=(
   .git-completion.bash \
 )
 
+echo "Installing dotfiles.."
+
+if [ "$(uname)" == "Darwin" ]; then
+    echo "Running on OSX"
+fi
+
 # Set Symbolic Link
 for file in ${DOT_FILES[@]}
 do
@@ -24,3 +30,5 @@ done
 if [ ! -e $HOME/.vim/neobundle.vim -a -x "`which git`" ]; then
   git clone https://github.com/Shougo/neobundle.vim $HOME/.vim/neobundle.vim
 fi
+
+echo "Done :)"
