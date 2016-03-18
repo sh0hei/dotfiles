@@ -9,8 +9,10 @@ DOT_FILES=(
 
 echo "Installing dotfiles.."
 
+# If we're on a Mac, let's install and setup homebrew.
 if [ "$(uname)" == "Darwin" ]; then
     echo "Running on OSX"
+	ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 fi
 
 # Set Symbolic Link
