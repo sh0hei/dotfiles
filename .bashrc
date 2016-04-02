@@ -13,9 +13,11 @@ shopt -s histappend
 # enable color support of ls and also add hand aliases
 if [ "$TERM" != "dumb" ]; then
 	eval "`dircolors -b`"
-	alias ls='ls --color=auto'
-	alias dir='ls --color=auto --format=vertical'
-	alias vdir='ls --color=auto --format=long'
+	if [ $(uname) = "Darwin" ]; then
+	    alias ls='ls -G'
+	else then
+	    alias ls='ls --color=auto'
+	fi
 	alias grep='grep --color=auto'
 	alias fgrep='fgrep --color=auto'
 	alias egrep='egrep --color=auto'
@@ -28,6 +30,8 @@ alias l='ls -CF'
 alias ll='ls -l'
 alias la='ls -A'
 alias lla='ls -lA'
+alias dir='ls --format=vertical'
+alias vdir='ls --format=long'
 
 # for setting history length and format see HISTSIZE and HISTFILESIZE and HISTTIMEFORMAT in bash(1)
 HISTSIZE=99999
